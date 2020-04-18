@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  monero-stagenet:
+    image: ${DOCKER_TAG}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VERSION: ${VERSION}
+        CHECKSUM: ${CHECKSUM}
+    ports:
+      - 38080:38080 # p2p network
+      - 38081:38081 # JSON-RPC server
+      - 38082:38082 # ZMQ server
+    volumes:
+      - ./data:/monero
+    # monero-stagenet.exan.tech:38081
+    command: ["/monero/./monerod", "--p2p-bind-ip=0.0.0.0", "--p2p-bind-port=18080", "--rpc-bind-ip=0.0.0.0", "--rpc-bind-port=18081", "--non-interactive", "--confirm-external-bind"]
+    restart: on-failure
