@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   monero-testnet:
-    image: ${DOCKER_TAG}
+    working_dir: /monero
     build:
       context: .
       dockerfile: Dockerfile
@@ -14,7 +14,7 @@ services:
       - 28081:28081 # JSON-RPC server
       - 28082:28082 # ZMQ server
     volumes:
-      - ./data:/monero
+      - ./monero/testnet:/monero/testnet
     # monero-testnet.exan.tech:28081
-    command: ["/monero/./monerod", "--testnet", "--p2p-bind-ip=0.0.0.0", "--p2p-bind-port=18080", "--rpc-bind-ip=0.0.0.0", "--rpc-bind-port=18081", "--non-interactive", "--confirm-external-bind"]
+    command: ./monerod --testnet --p2p-bind-ip=0.0.0.0 --p2p-bind-port=28080 --rpc-bind-ip=0.0.0.0 --rpc-bind-port=28081 --non-interactive --confirm-external-bind  --data-dir /monero/mainnet
     restart: on-failure

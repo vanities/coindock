@@ -1,0 +1,5 @@
+FROM vanities/monerodock:latest
+
+COPY ./make_private_localnet.sh .
+
+RUN ./make_private_localnet.sh
