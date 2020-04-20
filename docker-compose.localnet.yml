@@ -10,11 +10,11 @@ services:
         VERSION: ${VERSION}
         CHECKSUM: ${CHECKSUM}
     ports:
-      - 38080:38080 # p2p network
-      - 38081:38081 # JSON-RPC server
-      - 38082:38082 # ZMQ server
+      - 48080:48080 # p2p network
+      - 48081:48081 # JSON-RPC server
+      - 48082:48082 # ZMQ server
     volumes:
       - ./monero/localnet:/monero/localnet
     # monero-stagenet.exan.tech:38081
-    command: ./monerod --stagenet --no-igd --hide-my-port --data-dir ~/localnet/node_01 --p2p-bind-ip 0.0.0.0 --p2p-bind-port=38080 --rpc-bind-ip=0.0.0.0 --rpc-bind-port=38081 --log-level 0  --fixed-difficulty 1 --non-interactive --data-dir /monero/localnet
+    command: ./monerod --stagenet --no-igd --hide-my-port --data-dir ~/localnet/node_01 --p2p-bind-ip 0.0.0.0 --p2p-bind-port=48080 --rpc-bind-ip=0.0.0.0 --rpc-bind-port=48081 --log-level 0  --fixed-difficulty 1 --non-interactive --data-dir /monero/localnet
     restart: on-failure

@@ -6,6 +6,7 @@ DOCKER_TAG = $(DOCKER_NAME)\/$(SERVICE_NAME):latest
 
 DOCKER_MAIN_PATH = docker-compose.mainnet.yml
 DOCKER_TEST_PATH = docker-compose.testnet.yml
+DOCKER_STAGE_PATH = docker-compose.stagenet.yml
 DOCKER_LOCAL_PATH = docker-compose.localnet.yml
 
 DOCKER_COMPOSE = docker-compose --file
@@ -16,29 +17,36 @@ CHECKSUM = 6cae57cdfc89d85c612980c6a71a0483bbfc1b0f56bbb30e87e933e7ba6fc7e7
 # Faucets and info
 #https://monerodocs.org/infrastructure/networks/
 
-build: env
-	$(DOCKER_COMPOSE) $(DOCKER_MAIN_PATH) build
-
-build-test: env
-	$(DOCKER_COMPOSE) $(DOCKER_TEST_PATH) build
-
-build-local: env
-	$(DOCKER_COMPOSE) $(DOCKER_LOCAL_PATH) build
-
 up: down build
 	$(DOCKER_COMPOSE) $(DOCKER_MAIN_PATH) up
 
 up-test: build-test
 	$(DOCKER_COMPOSE) $(DOCKER_TEST_PATH) up
 
+up-stage: build-stage
+	$(DOCKER_COMPOSE) $(DOCKER_STAGE_PATH) up
+
 up-local: build-local
 	$(DOCKER_COMPOSE) $(DOCKER_LOCAL_PATH) up
+
+build: env
+	$(DOCKER_COMPOSE) $(DOCKER_MAIN_PATH) build
+
+build-test: env
+	$(DOCKER_COMPOSE) $(DOCKER_TEST_PATH) build
+
+build-stage: env
+	$(DOCKER_COMPOSE) $(DOCKER_STAGE_PATH) build
+
+build-local: env
+	$(DOCKER_COMPOSE) $(DOCKER_LOCAL_PATH) build
 
 down:
 	@echo "Shutting down..."
 	@$(DOCKER_COMPOSE) $(DOCKER_TEST_PATH) down --remove-orphans
 	@$(DOCKER_COMPOSE) $(DOCKER_MAIN_PATH) down --remove-orphans
 	@$(DOCKER_COMPOSE) $(DOCKER_LOCAL_PATH) down --remove-orphans
+	@$(DOCKER_COMPOSE) $(DOCKER_STAGE_PATH) down --remove-orphans
 	@echo "done"
 
 config:
