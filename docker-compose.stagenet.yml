@@ -16,5 +16,5 @@ services:
     volumes:
       - ./monero/stagenet:/monero/stagenet
     # monero-stagenet.exan.tech:38081
-    command: ./monerod --stagenet --p2p-bind-ip 0.0.0.0 --p2p-bind-port=38080 --rpc-bind-ip=0.0.0.0 --rpc-bind-port=38081 --non-interactive --data-dir /monero/stagenet
+    command: ./monerod --stagenet --p2p-bind-ip 0.0.0.0 --p2p-bind-port=38080 --rpc-bind-ip=0.0.0.0 --rpc-bind-port=38081 --non-interactive --confirm-external-bind --data-dir /monero/stagenet
     restart: on-failure
