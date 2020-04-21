@@ -12,22 +12,61 @@ dockerized monero node for mainnet, stagenet, testnet, and a personal local net.
 
 1. Download and Install [docker](https://docs.docker.com/get-docker/)
 2. Download and Install [docker-compose](https://docs.docker.com/compose/install/)
+3. `git clone https://github.com/vanities/monerodock.git`
 
 
-## Run
+## Run Locally
 
 ### mainnet
 
-1. `make`
+```
+$ make
+```
 
 ### stagenet
 
-1. `make up-stage`
+```
+$ make up-stage
+```
 
 ### testnet
 
-1. `make up-test`
+```
+$ make up-test
+```
 
 ### localenet
 
-1. `make up-local`
+```
+$ make up-local
+```
+
+## Running all the time
+
+This is for installing as a long running service for systemd
+
+
+### Install
+
+```
+$ make install
+```
+
+### Restart
+
+```
+$ make service-restart
+```
+
+### Check the Status
+
+```
+$ make service-status
+```
+
+
+### Uninstall
+
+```
+$ make uninstall
+```
