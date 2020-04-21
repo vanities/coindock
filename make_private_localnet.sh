@@ -13,7 +13,7 @@ cd /monero
 # create private wallets
 
 # 56bCoEmLPT8XS82k2ovp5EUYLzBt9pYNW2LXUFsZiv8S3Mt21FZ5qQaAroko1enzw3eGr9qC7X1D7Geoo2RrAotYPx1iovY
-echo "" | ./monero-wallet-cli --$NETTYPE --generate-new-wallet /monero/localnet/wallet_01.bin  --restore-deterministic-wallet --electrum-seed="sequence atlas unveil summon pebbles tuesday beer rudely snake rockets different fuselage woven tagged bested dented vegan hover rapid fawns obvious muppet randomly seasons randomly" --password "" --log-file /monero/localnet/wallet_01.log;
+echo "" | ./monero-wallet-cli --$NETTYPE --generate-new-wallet /monero/localnet/wallet_01.bin  --restore-deterministic-wallet --electrum-seed="sequence atlas unveil summon pebbles tuesday beer rudely snake rockets different fuselage woven tagged bested dented vegan hover rapid fawns obvious muppet randomly seasons randomly" --password "" --log-file /monero/localnet/wallet_01.log || echo "done"
 
 ./monerod \
    --stagenet \
@@ -25,8 +25,9 @@ echo "" | ./monero-wallet-cli --$NETTYPE --generate-new-wallet /monero/localnet/
    --rpc-bind-ip=0.0.0.0 \
    --rpc-bind-port=48081 \
    --non-interactive \
-   --confirm-external-bind
+   --confirm-external-bind &
 
+./start_mining 9wviCeWe2D8XS82k2ovp5EUYLzBt9pYNW2LXUFsZiv8S3Mt21FZ5qQaAroko1enzw3eGr9qC7X1D7Geoo2RrAotYPwq9Gm8 1
 
 
 sleep 3

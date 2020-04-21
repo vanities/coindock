@@ -14,6 +14,12 @@ DOCKER_COMPOSE = docker-compose --file
 VERSION = v0.15.0.5
 CHECKSUM = 6cae57cdfc89d85c612980c6a71a0483bbfc1b0f56bbb30e87e933e7ba6fc7e7
 
+INSTALL_URL = prod
+INSTALL_PATH = /coinmine/stuff
+
+SERVICE_NAME = monero-node
+
+
 # Faucets and info
 #https://monerodocs.org/infrastructure/networks/
 
@@ -53,21 +59,33 @@ config:
 	$(DOCKER_COMPOSE) $(DOCKER_TEST_PATH) config
 
 release:
-	 rsync -r . $(URL):/coinmine/$(SERVICE_NAME)
+	rsync -r . $(INSTALL_URL):$(INSTALL_PATH)
 
 service_start:
 	sudo cp services/* /etc/systemd/system
-	sudo systemctl start $(SERVICE_NAME).service
-	sudo systemctl enable $(SERVICE_NAME).service
+	#sudo systemctl start $(SERVICE_NAME)-mainnet.service
+	#sudo systemctl enable $(SERVICE_NAME)-mainnet.service
+	#sudo systemctl start $(SERVICE_NAME)-testnet.service
+	#sudo systemctl enable $(SERVICE_NAME)-testnet.service
+	sudo systemctl start $(SERVICE_NAME)-stagenet.service
+	sudo systemctl enable $(SERVICE_NAME)-stagenet.service
+	#sudo systemctl start $(SERVICE_NAME)-localnet.service
+	#sudo systemctl enable $(SERVICE_NAME)-localnet.service
 
 service_restart:
-	sudo systemctl restart $(SERVICE_NAME).service
+	sudo systemctl restart $(SERVICE_NAME)-mainnet.service
+	sudo systemctl restart $(SERVICE_NAME)-testnet.service
+	sudo systemctl restart $(SERVICE_NAME)-stagenet.service
+	sudo systemctl restart $(SERVICE_NAME)-localnet.service
 
 service_reload:
 	sudo systemctl daemon-reload
 
 service_status:
-	sudo systemctl status $(SERVICE_NAME).service
+	sudo systemctl status $(SERVICE_NAME)-mainnet.service
+	sudo systemctl status $(SERVICE_NAME)-testnet.service
+	sudo systemctl status $(SERVICE_NAME)-stagenet.service
+	sudo systemctl status $(SERVICE_NAME)-localnet.service
 
 env:
 	@sed -e "s/VERSION=.*/VERSION=$(VERSION)/g" .env > tmp
