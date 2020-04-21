@@ -14,7 +14,7 @@ services:
       - 28081:28081 # JSON-RPC server
       - 28082:28082 # ZMQ server
     volumes:
-      - ./monero/testnet:/monero/testnet
+      - ./data:/monero/testnet
     # monero-testnet.exan.tech:28081
     command: ./monerod --testnet --p2p-bind-ip=0.0.0.0 --p2p-bind-port=28080 --rpc-bind-ip=0.0.0.0 --rpc-bind-port=28081 --non-interactive --confirm-external-bind  --data-dir /monero/testnet
     restart: on-failure

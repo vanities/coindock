@@ -14,7 +14,7 @@ services:
       - 38081:38081 # JSON-RPC server
       - 38082:38082 # ZMQ server
     volumes:
-      - ./monero/stagenet:/monero/stagenet
+      - ./data:/monero/stagenet
     # ./monerod --config-file=/monero/stagenet/monerod.conf
     command: ./monerod --stagenet --p2p-bind-ip 0.0.0.0 --p2p-bind-port=38080 --rpc-bind-ip=0.0.0.0 --rpc-bind-port=38081 --non-interactive --confirm-external-bind --data-dir /monero/stagenet
     restart: on-failure

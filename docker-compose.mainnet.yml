@@ -14,6 +14,6 @@ services:
       - 18080:18080
       - 18081:18081
     volumes:
-      - ./monero/mainnet:/monero/mainnet
+      - ./data:/monero/mainnet
     command: ./monerod --p2p-bind-ip=0.0.0.0 --p2p-bind-port=18080 --rpc-bind-ip=0.0.0.0 --rpc-bind-port=18081 --non-interactive --confirm-external-bind --data-dir /monero/mainnet
     restart: on-failure

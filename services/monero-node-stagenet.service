@@ -6,7 +6,7 @@ Wants=network-online.target
 
 [Service]
 User=root
-WorkingDirectory=/opt/monero
+WorkingDirectory=/coinmine/stuff
 ExecStart=/usr/bin/make up-stage
 Restart=always
 RestartSec=5s

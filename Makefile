@@ -11,13 +11,17 @@ DOCKER_LOCAL_PATH = docker-compose.localnet.yml
 
 DOCKER_COMPOSE = docker-compose --file
 
+# monero version and checksum
 VERSION = v0.15.0.5
 CHECKSUM = 6cae57cdfc89d85c612980c6a71a0483bbfc1b0f56bbb30e87e933e7ba6fc7e7
 
-INSTALL_URL = prod
-INSTALL_PATH = /coinmine/stuff
+# rysnc options:
+INSTALL_URL = ip:port # ssh ip/port
+INSTALL_PATH = /your-dir # add where you want the node to be rsync'd to
 
-SERVICE_NAME = monero-node
+
+# systemd options:
+SERVICE_NAME = monero-node # name of the service in services
 
 
 # Faucets and info
@@ -59,41 +63,41 @@ config:
 	$(DOCKER_COMPOSE) $(DOCKER_TEST_PATH) config
 
 release:
-	rsync -r . $(INSTALL_URL):$(INSTALL_PATH)
+	rsync -r . $(INSTALL_URL):$(INSTALL_PATH) -v --progress
 
 install:
 	sudo cp services/* /etc/systemd/system
-	services_enable
-	services_start
+	make service_start
+	make service_enable
 
-services_enable:
-	#sudo systemctl start $(SERVICE_NAME)-mainnet.service
-	#sudo systemctl start $(SERVICE_NAME)-testnet.service
-	sudo systemctl start $(SERVICE_NAME)-stagenet.service
-	#sudo systemctl start $(SERVICE_NAME)-localnet.service
-
-services_start:
+service_start:
 	#sudo systemctl enable $(SERVICE_NAME)-mainnet.service
 	#sudo systemctl enable $(SERVICE_NAME)-testnet.service
 	sudo systemctl enable $(SERVICE_NAME)-stagenet.service
 	#sudo systemctl enable $(SERVICE_NAME)-localnet.service
 
+service_enable:
+	#sudo systemctl start $(SERVICE_NAME)-mainnet.service
+	#sudo systemctl start $(SERVICE_NAME)-testnet.service
+	sudo systemctl start $(SERVICE_NAME)-stagenet.service
+	#sudo systemctl start $(SERVICE_NAME)-localnet.service
+
 service_restart:
-	sudo systemctl restart $(SERVICE_NAME)-mainnet.service
-	sudo systemctl restart $(SERVICE_NAME)-testnet.service
+	#sudo systemctl restart $(SERVICE_NAME)-mainnet.service
+	#sudo systemctl restart $(SERVICE_NAME)-testnet.service
 	sudo systemctl restart $(SERVICE_NAME)-stagenet.service
-	sudo systemctl restart $(SERVICE_NAME)-localnet.service
+	#sudo systemctl restart $(SERVICE_NAME)-localnet.service
 
 service_reload:
 	sudo systemctl daemon-reload
 
 service_status:
-	sudo systemctl status $(SERVICE_NAME)-mainnet.service
-	sudo systemctl status $(SERVICE_NAME)-testnet.service
+	#sudo systemctl status $(SERVICE_NAME)-mainnet.service
+	#sudo systemctl status $(SERVICE_NAME)-testnet.service
 	sudo systemctl status $(SERVICE_NAME)-stagenet.service
-	sudo systemctl status $(SERVICE_NAME)-localnet.service
+	#sudo systemctl status $(SERVICE_NAME)-localnet.service
 
-service_disable:
+service_stop:
 	sudo systemctl stop $(SERVICE_NAME)-mainnet.service
 	sudo systemctl stop $(SERVICE_NAME)-testnet.service
 	sudo systemctl stop $(SERVICE_NAME)-stagenet.service
@@ -105,7 +109,7 @@ service_disable:
 	sudo systemctl disable $(SERVICE_NAME)-stagenet.service
 	sudo systemctl disable $(SERVICE_NAME)-localnet.service
 
-uninstall: service_disable service_stop
+uninstall: service_stop service_disable
 	rm -rf /etc/systemd/monero-node*
 
 env:
