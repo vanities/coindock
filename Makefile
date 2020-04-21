@@ -61,15 +61,21 @@ config:
 release:
 	rsync -r . $(INSTALL_URL):$(INSTALL_PATH)
 
-service_start:
+install:
 	sudo cp services/* /etc/systemd/system
+	services_enable
+	services_start
+
+services_enable:
 	#sudo systemctl start $(SERVICE_NAME)-mainnet.service
-	#sudo systemctl enable $(SERVICE_NAME)-mainnet.service
 	#sudo systemctl start $(SERVICE_NAME)-testnet.service
-	#sudo systemctl enable $(SERVICE_NAME)-testnet.service
 	sudo systemctl start $(SERVICE_NAME)-stagenet.service
-	sudo systemctl enable $(SERVICE_NAME)-stagenet.service
 	#sudo systemctl start $(SERVICE_NAME)-localnet.service
+
+services_start:
+	#sudo systemctl enable $(SERVICE_NAME)-mainnet.service
+	#sudo systemctl enable $(SERVICE_NAME)-testnet.service
+	sudo systemctl enable $(SERVICE_NAME)-stagenet.service
 	#sudo systemctl enable $(SERVICE_NAME)-localnet.service
 
 service_restart:
@@ -86,6 +92,21 @@ service_status:
 	sudo systemctl status $(SERVICE_NAME)-testnet.service
 	sudo systemctl status $(SERVICE_NAME)-stagenet.service
 	sudo systemctl status $(SERVICE_NAME)-localnet.service
+
+service_disable:
+	sudo systemctl stop $(SERVICE_NAME)-mainnet.service
+	sudo systemctl stop $(SERVICE_NAME)-testnet.service
+	sudo systemctl stop $(SERVICE_NAME)-stagenet.service
+	sudo systemctl stop $(SERVICE_NAME)-localnet.service
+
+service_disable:
+	sudo systemctl disable $(SERVICE_NAME)-mainnet.service
+	sudo systemctl disable $(SERVICE_NAME)-testnet.service
+	sudo systemctl disable $(SERVICE_NAME)-stagenet.service
+	sudo systemctl disable $(SERVICE_NAME)-localnet.service
+
+uninstall: service_disable service_stop
+	rm -rf /etc/systemd/monero-node*
 
 env:
 	@sed -e "s/VERSION=.*/VERSION=$(VERSION)/g" .env > tmp
