@@ -1,6 +1,6 @@
 # monerodock
 
-dockerized monero node for mainnet, stagenet, testnet, and a personal local net.
+dockerized ethereum node for mainnet, stagenet, testnet, and a personal local net.
 
 
 ## Requirements
@@ -12,7 +12,7 @@ dockerized monero node for mainnet, stagenet, testnet, and a personal local net.
 
 1. Download and Install [docker](https://docs.docker.com/get-docker/)
 2. Download and Install [docker-compose](https://docs.docker.com/compose/install/)
-3. `git clone https://github.com/vanities/monerodock.git`
+3. `git clone https://github.com/vanities/ethereumdock.git`
 
 
 ## Run Locally

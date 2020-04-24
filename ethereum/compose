@@ -5,7 +5,7 @@ set -ex
 # rysnc options:
 INSTALL_URL=prod # ssh ip/port
 INSTALL_PATH=/coinmine/stuff/ethereum # add where you want the node to be rsync'd to
-
+PWD=$(pwd)
 
 # systemd options:
 SERVICE_NAME=ethereum-node # name of the service in services
@@ -19,6 +19,11 @@ base_files="-f docker-compose.yml"
 base="docker-compose $base_files" # base config, used standalone for acceptance
 base_systemctl="sudo systemctl"
 
+
+function set_install(){
+    sed -e "s/WorkingDirectory=.*/WorkingDirectory=$(pwd)/g" services/$SERVICE_NAME-$1.service > tmp
+	mv -- tmp services/$SERVICE_NAME-$1.service
+}
 
 usage="compose -- A helper script for running common docker-compose commands\
 
@@ -71,6 +76,7 @@ case "$1" in
 	sudo cp services/* /etc/systemd/system
     for env in "${@:2}"
     do
+      set_install $env
       $base_systemctl enable $SERVICE_NAME-$env.service
       $base_systemctl start $SERVICE_NAME-$env.service
     done

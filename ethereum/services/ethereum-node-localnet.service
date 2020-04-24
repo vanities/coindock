@@ -1,16 +1,15 @@
 [Unit]
-Description=Monero Node Stagenet
+Description=Ethereum Node Localnet
 Requires=docker.service
 After=network-online.target
 Wants=network-online.target
 
 [Service]
 User=root
-WorkingDirectory=/coinmine/stuff
-ExecStart=/usr/bin/make up-stage
+WorkingDirectory=
+ExecStart=./compose localnet
 Restart=always
 RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
-

@@ -1,13 +1,13 @@
 [Unit]
-Description=Monero Node Mainnet
+Description=Ethereum Node Testnet
 Requires=docker.service
 After=network-online.target
 Wants=network-online.target
 
 [Service]
 User=root
-WorkingDirectory=/coinmine/stuff
-ExecStart=/usr/bin/make
+WorkingDirectory=
+ExecStart=./compose testnet
 Restart=always
 RestartSec=5s
 
