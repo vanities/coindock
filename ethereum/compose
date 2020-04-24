@@ -1,0 +1,89 @@
+#!/bin/bash
+
+set -ex
+
+# rysnc options:
+INSTALL_URL=prod # ssh ip/port
+INSTALL_PATH=/coinmine/stuff/ethereum # add where you want the node to be rsync'd to
+
+
+# systemd options:
+SERVICE_NAME=ethereum-node # name of the service in services
+
+# Command line flags used for 'docker compose build'
+DOCKER_COMPOSE_BUILD_OPTS=${DOCKER_COMPOSE_BUILD_OPTS-"--parallel"}
+
+
+base_files="-f docker-compose.yml"
+
+base="docker-compose $base_files" # base config, used standalone for acceptance
+base_systemctl="sudo systemctl"
+
+
+usage="compose -- A helper script for running common docker-compose commands\
+
+Commands:
+    help                  Displays this help menu
+
+    up                    Ups any service(s) by name
+    down                  Stops any service(s) by name
+
+    config                Displays the config of the compose file
+    logs                  Display the logs of any service(s) by name
+
+    install               Copies the files in services/ then enables and starts the systemd service(s)
+    uninstall             Removes the files in services/ then disables and stops the systemd service(s)
+
+    *                     Run docker-compose with base config"
+
+case "$1" in
+  help)
+    echo "$usage"
+    ;;
+  up)
+    for env in "${@:2}"
+    do
+      services+="$SERVICE_NAME-$env "
+    done
+    $base up $services
+    ;;
+  down)
+    for env in "${@:2}"
+    do
+      services+="$SERVICE_NAME-$env "
+    done
+    $base down $services
+    ;;
+  config)
+    $base config
+    ;;
+  logs)
+    for env in "${@:2}"
+    do
+      services+="$SERVICE_NAME-$env "
+    done
+    $base logs -f $services
+    ;;
+  release)
+	rsync -r . $INSTALL_URL:$INSTALL_PATH -v --progress
+    ;;
+  install)
+	sudo cp services/* /etc/systemd/system
+    for env in "${@:2}"
+    do
+      $base_systemctl enable $SERVICE_NAME-$env.service
+      $base_systemctl start $SERVICE_NAME-$env.service
+    done
+    ;;
+  uninstall)
+	rm -rf /etc/systemd/monero-node*
+    for env in "${@:2}"
+    do
+      $base_systemctl disable $SERVICE_NAME-$env.service
+      $base_systemctl stop $SERVICE_NAME-$env.service
+    done
+    ;;
+  *)
+    $base "$@"
+    ;;
+esac

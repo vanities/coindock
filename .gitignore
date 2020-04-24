@@ -1,1 +1,7 @@
-**/*monero
+**/*.log
+**/*.bin
+
+**/*.ethereum
+
+# monero
+**/*.mdb

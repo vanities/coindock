@@ -1,0 +1,16 @@
+[Unit]
+Description=Monero Node Stagenet
+Requires=docker.service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=root
+WorkingDirectory=/coinmine/stuff
+ExecStart=/usr/bin/make up-stage
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+

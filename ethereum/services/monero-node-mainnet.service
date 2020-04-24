@@ -1,13 +1,13 @@
 [Unit]
-Description=Monero Node Localnet
+Description=Monero Node Mainnet
 Requires=docker.service
 After=network-online.target
 Wants=network-online.target
 
 [Service]
 User=root
-WorkingDirectory=/opt/monero
-ExecStart=/usr/bin/make up-local
+WorkingDirectory=/coinmine/stuff
+ExecStart=/usr/bin/make
 Restart=always
 RestartSec=5s
 
