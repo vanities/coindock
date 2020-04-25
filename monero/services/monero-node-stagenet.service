@@ -7,7 +7,7 @@ Wants=network-online.target
 [Service]
 User=root
 WorkingDirectory=
-ExecStart=./compose stagenet
+ExecStart=/bin/bash compose up stagenet
 Restart=always
 RestartSec=5s
 

@@ -5,7 +5,7 @@ set -ex
 DOCKER_NAME=vanities
 SERVICE_NAME=monerodock
 
-DOCKER_TAG="$DOCKER_NAME\/$SERVICE_NAME:latest"
+DOCKER_TAG="$DOCKER_NAME/$SERVICE_NAME:latest"
 
 # monero version and checksum
 VERSION=v0.15.0.5
@@ -24,7 +24,7 @@ function set_environment(){
 	sed -e "s/VERSION=.*/VERSION=$VERSION/g" .env > tmp
 	mv -- tmp .env
 	sed -e "s/CHECKSUM=.*/CHECKSUM=$CHECKSUM/g" .env > tmp
-	sed -e "s/DOCKER_TAG=.*/DOCKER_TAG=$DOCKER_TAG/g" .env > tmp
+	sed -e "s?DOCKER_TAG=.*?DOCKER_TAG=$DOCKER_TAG?g" .env > tmp
 	mv -- tmp .env
 }
 function set_install(){

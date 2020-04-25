@@ -7,10 +7,9 @@ Wants=network-online.target
 [Service]
 User=root
 WorkingDirectory=
-ExecStart=./compose mainnet
+ExecStart=/bin/bash compose up mainnet
 Restart=always
 RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
-

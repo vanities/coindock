@@ -3,9 +3,8 @@
 set -ex
 
 # rysnc options:
-INSTALL_URL=prod # ssh ip/port
+INSTALL_URL=stag # ssh ip/port
 INSTALL_PATH=/coinmine/stuff/ethereum # add where you want the node to be rsync'd to
-PWD=$(pwd)
 
 # systemd options:
 SERVICE_NAME=ethereum-node # name of the service in services
@@ -21,7 +20,7 @@ base_systemctl="sudo systemctl"
 
 
 function set_install(){
-    sed -e "s/WorkingDirectory=.*/WorkingDirectory=$(pwd)/g" services/$SERVICE_NAME-$1.service > tmp
+    sed -e "s?WorkingDirectory=.*?WorkingDirectory=$(pwd)?g" services/$SERVICE_NAME-$1.service > tmp
 	mv -- tmp services/$SERVICE_NAME-$1.service
 }
 

@@ -7,7 +7,7 @@ Wants=network-online.target
 [Service]
 User=root
 WorkingDirectory=
-ExecStart=./compose localnet
+ExecStart=/bin/bash compose up localnet
 Restart=always
 RestartSec=5s
 
