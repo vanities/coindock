@@ -44,6 +44,8 @@ base_systemctl="sudo systemctl"
 
 usage="compose -- A helper script for running common docker-compose commands\
 
+Usage:  compose COMMAND [SERVICES]
+
 Commands:
     help                  Displays this help menu
 

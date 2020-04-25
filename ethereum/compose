@@ -26,6 +26,8 @@ function set_install(){
 
 usage="compose -- A helper script for running common docker-compose commands\
 
+Usage:  compose COMMAND [SERVICES]
+
 Commands:
     help                  Displays this help menu
 
@@ -37,6 +39,7 @@ Commands:
 
     install               Copies the files in services/ then enables and starts the systemd service(s)
     uninstall             Removes the files in services/ then disables and stops the systemd service(s)
+
 
     *                     Run docker-compose with base config"
 
